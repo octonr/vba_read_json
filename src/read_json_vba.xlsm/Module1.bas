@@ -11,6 +11,13 @@ Private Function Isx64() As Boolean
 End Function
 
 Public Function read_json(ByVal jsonFilePath As String) As Object:
+    '#confirm file path exist
+    If Dir(jsonFilePath) = "" Then
+        Err.Raise _
+            Number:=1004, _
+            Description:="jsonÉtÉ@ÉCÉãÇ™ë∂ç›ÇµÇ‹ÇπÇÒ: " & jsonFilePath
+        
+    End If
     '#read json file
     Dim buf As String
     With CreateObject("ADODB.Stream")
@@ -45,8 +52,9 @@ End Function
 Private Sub thisCodeDebug()
     Dim jsonFilePath As String
     Dim config As Object
-        
-    jsonFilePath = "../config.json"
+    
+    
+    jsonFilePath = ThisWorkbook.Path & "\..\config.json"
     Set config = read_json(jsonFilePath)
     
     Debug.Print CallByName( _
